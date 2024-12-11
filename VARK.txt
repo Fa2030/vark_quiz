@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VARK Quiz for G1 Students</title>
+    <style>
+        .draggable {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: move;
+        }
+
+        .dropzone {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            margin: 5px;
+            background-color: #e0e0ff;
+            border: 2px dashed #00f;
+        }
+    </style>
+</head>
+<body>
+    <h1>VARK Learning Style Quiz</h1>
+    <form action="/submit" method="post">
+        <h2>Visual (بصري)</h2>
+        <p>
+            <label>Question: Which image represents an apple?</label><br>
+            <input type="radio" name="visual" value="Correct"> <img src="apple.jpg" alt="Apple" width="50"> <br>
+            <input type="radio" name="visual" value="Incorrect"> <img src="book.jpg" alt="Book" width="50"> <br>
+        </p>
+
+        <h2>Auditory (سمعي)</h2>
+        <p>
+            <label>Question: Listen to the sound and choose the correct answer.</label><br>
+            <audio controls>
+                <source src="cat_sound.mp3" type="audio/mpeg">
+            </audio><br>
+            <input type="radio" name="auditory" value="Correct"> Cat <br>
+            <input type="radio" name="auditory" value="Incorrect"> Dog <br>
+        </p>
+
+        <h2>Kinesthetic (حركي)</h2>
+        <p>
+            <label>Activity: Drag the letters to form the word "Ball"</label><br>
+            <div id="letters">
+                <div class="draggable" draggable="true" id="B">B</div>
+                <div class="draggable" draggable="true" id="A">A</div>
+                <div class="draggable" draggable="true" id="L">L</div>
+                <div class="draggable" draggable="true" id="L2">L</div>
+            </div>
+            <div id="dropzones">
+                <div class="dropzone" id="zone1"></div>
+                <div class="dropzone" id="zone2"></div>
+                <div class="dropzone" id="zone3"></div>
+                <div class="dropzone" id="zone4"></div>
+            </div>
+        </p>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const dropzones = document.querySelectorAll('.dropzone');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging');
+            });
+
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+            });
+        });
+
+        dropzones.forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                const dragging = document.querySelector('.dragging');
+                zone.appendChild(dragging);
+            });
+        });
+    </script>
+</body>
+</html>
